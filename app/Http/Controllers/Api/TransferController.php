@@ -64,7 +64,7 @@ class TransferController extends Controller
                         $receiverBalance + $request->transfer_amount
                     ];
 
-                    for ($i = 0; $i < (sizeof($ids)+sizeof($balances))/2; $i++)
+                    for ($i = 0; $i < 2; $i++)
                         User::query()->where('id', $ids[$i])->update(['balance' => $balances[$i]]);
                 });
             });

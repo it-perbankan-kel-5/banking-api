@@ -72,7 +72,26 @@ class UserController extends Controller
                 'message' => $t->getMessage()
             ], 400);
         }
+    }
 
+    public function get_user_transactions() {
+        try {
+            $result = DB::table('users', 'u')
+                ->join('transfer_detail as td', 'u.id', '=', 'td.user_id')
+                ->join('transfer as t', 't.id', '=', 'td.transfer_id')
+                ->where('t.user_id', '=', request()->user()->id)
+                ->get(['u.first_name', 'u.last_name', 'u.email',
+                    'td.date', 'td.time', 'td.amount as transfer_amount']);
+
+            return response()->json([
+                $result
+            ]);
+        } catch (Throwable $t) {
+            error($t->getMessage());
+            return response()->json([
+                'message' => $t->getMessage()
+            ], 400);
+        }
     }
 
     private function total_user_income() {
