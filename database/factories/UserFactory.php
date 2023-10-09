@@ -19,17 +19,17 @@ class UserFactory extends Factory
      */
     public function definition(): array
     {
-        $last_name = $this->faker->lastName();
+        $pin = $this->faker->randomNumber(6, true);
         return [
             //
             'first_name' => $this->faker->firstName(),
-            'last_name' => $last_name,
+            'last_name' => $this->faker->lastName(),
             'email' => $this->faker->safeEmail(),
             'phone_number' => $this->faker->e164PhoneNumber(),
-            'password' => Hash::make($last_name),
+            'password' => Hash::make($pin),
             'address' => $this->faker->streetAddress(),
             'card_number' => $this->faker->creditCardNumber('Visa', true, '-'),
-            'card_pin' => $this->faker->randomNumber(6, true),
+            'card_pin' => $pin,
             'balance' => rand(1_000_000, 500_000_000),
         ];
     }
